@@ -70,10 +70,10 @@ function authenticate() {
     }
 
     // Replace with the actual data fetching function
-    function fetchData() {
-      return fetch('http://yourserver.com/data')
-        .then(response => response.json());
-    }
+  function fetchData() {
+    return fetch('https://petthebat.pythonanywhere.com/data', { credentials: 'include' })
+      .then(response => response.json());
+  }
 
     // Fetch data and plot it
     fetchData().then(data => {
