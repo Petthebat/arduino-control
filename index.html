@@ -41,7 +41,7 @@ function authenticate() {
   const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
 
-  fetch('https://Petthebat.pythonanywhere.com/authenticate', {
+  fetch('https://petthebat.pythonanywhere.com/authenticate', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username, password }),
