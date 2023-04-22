@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arduino Steuerung und Datenvisualisierung</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div id="login">
+    <h2>Anmeldung</h2>
+    <label for="username">Benutzername:</label>
+    <input type="text" id="username" name="username">
+    <br>
+    <label for="password">Passwort:</label>
+    <input type="password" id="password" name="password">
+    <br>
+    <button onclick="authenticate()">Anmelden</button>
+  </div>
+
+  <div id="content" class="hidden">
+    <h2>Arduino Steuerung</h2>
+    <!-- Steuerelemente zum Senden von Signalen zum Arduino -->
+    <!-- Hier können Sie weitere Steuerelemente hinzufügen, um verschiedene Pins zu schalten -->
+    <button onclick="sendSignal('digital', 2, 'HIGH')">Digital Pin 2 HIGH</button>
+    <button onclick="sendSignal('digital', 2, 'LOW')">Digital Pin 2 LOW</button>
+    <button onclick="sendSignal('analog', 3, 255)">Analog Pin 3 auf 255 setzen</button>
+    <button onclick="sendSignal('analog', 3, 0)">Analog Pin 3 auf 0 setzen</button>
+    <br>
+    <h2>Datenvisualisierung</h2>
+    <div id="plot"></div>
+  </div>
+
+  <script>
+    const correctUsername = 'your_username';
+    const correctPassword = 'your_password';
+
+    function authenticate() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      if (username === correctUsername && password === correctPassword) {
+        document.getElementById('login').classList.add('hidden');
+        document.getElementById('content').classList.remove('hidden');
+      } else {
+        alert('Falscher Benutzername oder Passwort');
+      }
+    }
+
+    function sendSignal(type, pin, value) {
+      // Send a signal to the Arduino through the server
+      // Replace with the actual server URL and parameters
+      fetch('http://yourserver.com/control?type=' + type + '&pin=' + pin + '&value=' + value)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+        });
+    }
+
+    // Replace with the actual data fetching function
+    function fetchData() {
+      return fetch('http://yourserver.com/data')
+        .then(response => response.json());
+    }
+
+    // Fetch data and plot it
+    fetchData().then(data => {
+      const trace = {
+        x: data.timestamp,
+        y: data.value,
+        mode: 'lines'
+      };
+
+      const layout
