@@ -35,20 +35,28 @@
   </div>
 
   <script>
-    const correctUsername = 'your_username';
-    const correctPassword = 'your_password';
 
-    function authenticate() {
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
+    
+function authenticate() {
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
 
-      if (username === correctUsername && password === correctPassword) {
+  fetch('https://Petthebat.pythonanywhere.com/authenticate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
         document.getElementById('login').classList.add('hidden');
         document.getElementById('content').classList.remove('hidden');
       } else {
         alert('Falscher Benutzername oder Passwort');
       }
-    }
+    });
+}
+
 
     function sendSignal(type, pin, value) {
       // Send a signal to the Arduino through the server
